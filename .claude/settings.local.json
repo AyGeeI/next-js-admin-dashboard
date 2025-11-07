@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm run db:migrate:*)",
+      "Bash(npx prisma migrate:*)",
+      "Bash(timeout:*)",
+      "Bash(npx prisma db push:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npm run db:seed:*)",
+      "Bash(nul)",
+      "Bash(npx prisma studio:*)",
+      "Bash(node check-user.js:*)",
+      "Bash(node:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

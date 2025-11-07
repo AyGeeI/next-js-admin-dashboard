@@ -3,9 +3,9 @@ import { ReactNode } from "react";
 import { cookies } from "next/headers";
 
 import { AppSidebar } from "@/app/(main)/dashboard/_components/sidebar/app-sidebar";
+import { auth } from "@/auth";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { users } from "@/data/users";
 import { cn } from "@/lib/utils";
 import { getPreference } from "@/server/server-actions";
 import {
@@ -28,12 +28,26 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
-  const [sidebarVariant, sidebarCollapsible, contentLayout, navbarStyle] = await Promise.all([
+  const [sidebarVariant, sidebarCollapsible, contentLayout, navbarStyle, session] = await Promise.all([
     getPreference<SidebarVariant>("sidebar_variant", SIDEBAR_VARIANT_VALUES, "inset"),
     getPreference<SidebarCollapsible>("sidebar_collapsible", SIDEBAR_COLLAPSIBLE_VALUES, "icon"),
     getPreference<ContentLayout>("content_layout", CONTENT_LAYOUT_VALUES, "centered"),
     getPreference<NavbarStyle>("navbar_style", NAVBAR_STYLE_VALUES, "scroll"),
+    auth(),
   ]);
+
+  // Transform session user into the format expected by AccountSwitcher
+  const currentUser = session?.user
+    ? {
+        id: (session.user as any).id || "",
+        name: session.user.name || "User",
+        email: session.user.email || "",
+        avatar: session.user.image || "",
+        role: (session.user as any).role || "user",
+      }
+    : null;
+
+  const users = currentUser ? [currentUser] : [];
 
   const layoutPreferences = {
     contentLayout,

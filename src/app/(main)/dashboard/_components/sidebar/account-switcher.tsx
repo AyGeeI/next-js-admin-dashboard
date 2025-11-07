@@ -26,6 +26,10 @@ export function AccountSwitcher({
     readonly role: string;
   }>;
 }) {
+  if (users.length === 0) {
+    return null;
+  }
+
   const [activeUser, setActiveUser] = useState(users[0]);
 
   return (
@@ -71,7 +75,11 @@ export function AccountSwitcher({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            import("./logout-action").then((mod) => mod.logoutAction());
+          }}
+        >
           <LogOut />
           Log out
         </DropdownMenuItem>
