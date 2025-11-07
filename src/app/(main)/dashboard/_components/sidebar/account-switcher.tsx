@@ -26,6 +26,10 @@ export function AccountSwitcher({
     readonly role: string;
   }>;
 }) {
+  if (users.length === 0) {
+    return null;
+  }
+
   const [activeUser, setActiveUser] = useState(users[0]);
 
   return (
