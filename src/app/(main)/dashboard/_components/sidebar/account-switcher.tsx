@@ -71,7 +71,11 @@ export function AccountSwitcher({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            import("./logout-action").then((mod) => mod.logoutAction());
+          }}
+        >
           <LogOut />
           Log out
         </DropdownMenuItem>

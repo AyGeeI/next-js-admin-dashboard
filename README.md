@@ -43,11 +43,13 @@ I’ve taken design inspiration from various sources. If you’d like credit for
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 (App Router), TypeScript, Tailwind CSS v4  
-- **UI Components**: Shadcn UI  
-- **Validation**: Zod  
-- **Forms & State Management**: React Hook Form, Zustand  
-- **Tables & Data Handling**: TanStack Table  
+- **Framework**: Next.js 16 (App Router), TypeScript, Tailwind CSS v4
+- **UI Components**: Shadcn UI
+- **Authentication**: Auth.js v5 (NextAuth)
+- **Database**: Prisma ORM + SQLite (local) / PostgreSQL (production)
+- **Validation**: Zod
+- **Forms & State Management**: React Hook Form, Zustand
+- **Tables & Data Handling**: TanStack Table
 - **Tooling & DX**: ESLint, Prettier, Husky  
 
 ## Screens
@@ -112,10 +114,64 @@ _Deploy your own copy with one click._
 
 Your app will be running at [http://localhost:3000](http://localhost:3000)
 
+## Authentication & Login
+
+This dashboard includes a fully functional authentication system using **Auth.js v5 (NextAuth)** with email/password credentials.
+
+### Quick Start
+
+1. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   The default `.env` includes development values for `AUTH_SECRET` and `DATABASE_URL`.
+
+2. **Generate Prisma client and run migrations**
+   ```bash
+   npx prisma generate
+   npm run db:migrate
+   ```
+
+3. **Seed the database with a default admin user**
+   ```bash
+   npm run db:seed
+   ```
+
+4. **Start the dev server and log in**
+   ```bash
+   npm run dev
+   ```
+   Navigate to [http://localhost:3000/auth/v1/login](http://localhost:3000/auth/v1/login)
+
+   **Default credentials:**
+   - Email: `admin@example.com`
+   - Password: `admin123`
+
+### Features
+
+- Email/password authentication with bcrypt password hashing
+- JWT-based sessions (no database sessions)
+- Protected dashboard routes via middleware
+- User roles stored in JWT (admin/user)
+- Logout functionality
+- Login v1 UI (split-screen design)
+
+### Documentation
+
+For detailed authentication documentation, including:
+- Architecture and flow
+- User management
+- Role-based access control
+- Production deployment
+- Security best practices
+- Troubleshooting
+
+See [docs/auth.md](docs/auth.md)
+
 ---
 
-> [!IMPORTANT]  
-> This project is updated frequently. If you’re working from a fork or an older clone, pull the latest changes before syncing. Some updates may include breaking changes.
+> [!IMPORTANT]
+> This project is updated frequently. If you're working from a fork or an older clone, pull the latest changes before syncing. Some updates may include breaking changes.
 
 ---
 
